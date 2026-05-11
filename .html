@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kigali Food – Authentic Flavors, Kigali Rwanda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#faf8f4;color:#1a1a14;min-height:100vh;overflow-x:hidden}
+:root{
+  --orange:#e8550a;
+  --orange-light:#ff6b1a;
+  --yellow:#f5a623;
+  --cream:#faf8f4;
+  --white:#ffffff;
+  --dark:#1a1a14;
+  --card:#ffffff;
+  --border:#e8e4da;
+  --muted:#888;
+  --green:#1a9e4a;
+  --red:#d63031;
+  --bg2:#f2ede4;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#f2ede4}
+::-webkit-scrollbar-thumb{background:#d4c9b8;border-radius:3px}
+
+/* AUTH */
+#auth-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:#faf8f4}
+.auth-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1400&q=80') center/cover;opacity:0.08}
+.auth-box{position:relative;z-index:1;background:#fff;border:1px solid var(--border);border-radius:22px;padding:2.8rem 2.5rem;width:min(440px,94vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.08)}
+.auth-logo{width:80px;height:80px;border-radius:50%;margin:0 auto 1rem;overflow:hidden;border:3px solid var(--orange);background:#fff3ee}
+.auth-logo img{width:100%;height:100%;object-fit:cover}
+.auth-brand{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--orange);margin-bottom:.2rem}
+.auth-tagline{font-size:.78rem;color:#aaa;margin-bottom:2rem;letter-spacing:2px;text-transform:uppercase}
+.auth-tabs{display:flex;background:#f5f1e8;border-radius:12px;padding:4px;margin-bottom:1.6rem;border:1px solid var(--border)}
+.auth-tab{flex:1;padding:.6rem;border-radius:9px;cursor:pointer;font-size:.88rem;font-weight:500;color:#999;transition:all .2s;border:none;background:none;font-family:'DM Sans',sans-serif}
+.auth-tab.active{background:var(--orange);color:#fff;font-weight:700}
+.input-group{margin-bottom:1rem;text-align:left}
+.input-group label{display:block;font-size:.76rem;color:#999;margin-bottom:.4rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
+.input-group input{width:100%;padding:.78rem 1rem;background:#faf8f4;border:1.5px solid var(--border);border-radius:10px;color:var(--dark);font-size:.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.input-group input:focus{border-color:var(--orange);background:#fff}
+.input-group input::placeholder{color:#ccc}
+.btn-auth{width:100%;padding:.9rem;background:var(--orange);color:#fff;border:none;border-radius:11px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-top:.4rem}
+.btn-auth:hover{background:var(--orange-light);transform:translateY(-1px)}
+.auth-divider{display:flex;align-items:center;gap:.8rem;margin:1.2rem 0;color:#ccc;font-size:.8rem}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.btn-guest{width:100%;padding:.8rem;background:transparent;border:1.5px solid var(--border);color:#888;border-radius:11px;font-size:.92rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-guest:hover{border-color:var(--orange);color:var(--orange)}
+.auth-error{color:var(--red);font-size:.82rem;margin-top:.5rem;display:none}
+
+/* NAV */
+#app{display:none}
+nav{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.nav-inner{max-width:1140px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav-logo{display:flex;align-items:center;gap:.9rem;cursor:pointer}
+.nav-logo-img{width:46px;height:46px;border-radius:50%;border:2px solid var(--orange);overflow:hidden}
+.nav-logo-img img{width:100%;height:100%;object-fit:cover}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;color:var(--orange);line-height:1}
+.nav-sub{font-size:.68rem;color:#bbb;letter-spacing:1.5px;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-username{font-size:.85rem;color:#aaa}
+@media(max-width:500px){.nav-username{display:none}}
+.cart-btn{position:relative;padding:.52rem 1.2rem;background:var(--orange);color:#fff;border:none;border-radius:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:.5rem;font-family:'DM Sans',sans-serif;font-size:.9rem;transition:all .2s}
+.cart-btn:hover{background:var(--orange-light);transform:translateY(-1px)}
+.cart-count{background:#fff;color:var(--orange);border-radius:50%;width:22px;height:22px;font-size:.72rem;display:flex;align-items:center;justify-content:center;font-weight:700}
+.btn-logout{padding:.45rem .9rem;background:transparent;border:1.5px solid var(--border);color:#aaa;border-radius:7px;cursor:pointer;font-size:.8rem;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+/* HERO */
+.hero{background:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&q=80') center/cover no-repeat;position:relative;padding:6rem 1.5rem 5rem;text-align:center}
+.hero::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.55)}
+.hero-content{position:relative;z-index:1;max-width:640px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,85,10,0.1);border:1px solid rgba(232,85,10,0.3);color:var(--orange);padding:.5rem 1.3rem;border-radius:50px;font-size:.82rem;font-weight:600;letter-spacing:.5px;margin-bottom:1.4rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:900;color:var(--dark);line-height:1.1;margin-bottom:.9rem}
+.hero h1 span{color:var(--orange)}
+.hero-desc{font-size:1.05rem;color:#555;margin-bottom:2rem;line-height:1.7}
+.hero-cta{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2.2rem;background:var(--orange);color:#fff;border:none;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 8px 24px rgba(232,85,10,0.3)}
+.hero-cta:hover{background:var(--orange-light);transform:translateY(-2px)}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;margin-top:2.5rem;flex-wrap:wrap}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--orange)}
+.hero-stat-label{font-size:.72rem;color:#888;text-transform:uppercase;letter-spacing:.8px}
+
+/* MAIN */
+.main{max-width:1140px;margin:0 auto;padding:2.5rem 1.5rem}
+.sec-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.6rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--dark)}
+.sec-sub{font-size:.88rem;color:#aaa}
+
+/* CATS */
+.cat-tabs{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem}
+.cat-btn{padding:.52rem 1.3rem;border-radius:50px;border:1.5px solid var(--border);background:#fff;color:#888;cursor:pointer;font-size:.88rem;font-weight:500;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.cat-btn:hover{border-color:var(--orange);color:var(--orange)}
+.cat-btn.active{background:var(--orange);color:#fff;border-color:var(--orange);font-weight:700}
+
+/* FOOD GRID */
+.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.3rem;margin-bottom:3.5rem}
+.food-card{background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .25s,box-shadow .25s;cursor:default}
+.food-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.1)}
+.food-img-wrap{position:relative;overflow:hidden}
+.food-img{width:100%;height:185px;object-fit:cover;transition:transform .35s}
+.food-card:hover .food-img{transform:scale(1.05)}
+.food-badge{position:absolute;top:.7rem;left:.7rem;padding:.25rem .75rem;border-radius:50px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.badge-popular{background:#fff3ee;color:var(--orange);border:1px solid rgba(232,85,10,0.2)}
+.badge-spicy{background:#fff0ee;color:var(--red);border:1px solid rgba(214,48,49,0.2)}
+.badge-veg{background:#eefff4;color:var(--green);border:1px solid rgba(26,158,74,0.2)}
+.food-info{padding:1.1rem}
+.food-name{font-weight:600;font-size:1rem;margin-bottom:.3rem;color:var(--dark);line-height:1.3}
+.food-desc{font-size:.8rem;color:#aaa;margin-bottom:.9rem;line-height:1.55}
+.food-footer{display:flex;align-items:center;justify-content:space-between}
+.food-price{font-size:1.05rem;font-weight:700;color:var(--orange)}
+.food-price small{font-size:.72rem;color:#ccc;font-weight:400}
+.add-btn{width:36px;height:36px;border-radius:50%;background:var(--orange);border:none;color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;transition:all .2s;flex-shrink:0}
+.add-btn:hover{background:var(--orange-light);transform:scale(1.1)}
+
+/* ABOUT */
+.about-section{background:#fff;border:1px solid var(--border);border-radius:22px;padding:2.5rem;margin-bottom:3rem;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.04)}
+@media(max-width:640px){.about-section{grid-template-columns:1fr}}
+.about-img-wrap{position:relative}
+.about-img{border-radius:14px;width:100%;height:260px;object-fit:cover;border:1px solid var(--border);display:block}
+.about-img-label{position:absolute;bottom:.9rem;left:.9rem;background:rgba(255,255,255,0.92);color:var(--orange);padding:.35rem .9rem;border-radius:50px;font-size:.75rem;font-weight:600;letter-spacing:.3px;border:1px solid rgba(232,85,10,0.2);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.about-text h2{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--dark);margin-bottom:1rem;line-height:1.2}
+.about-text h2 span{color:var(--orange)}
+.about-text p{color:#888;line-height:1.75;font-size:.93rem;margin-bottom:.8rem}
+.about-highlights{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
+.highlight-chip{padding:.3rem .9rem;background:#faf8f4;border:1px solid var(--border);border-radius:50px;font-size:.78rem;color:#888;display:flex;align-items:center;gap:.35rem}
+.about-stats{display:flex;gap:1.8rem;margin-top:1.3rem;flex-wrap:wrap}
+.a-stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--orange);line-height:1}
+.a-stat-label{font-size:.72rem;color:#bbb;text-transform:uppercase;letter-spacing:.8px;margin-top:.2rem}
+
+/* CART */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;display:none;backdrop-filter:blur(4px)}
+.cart-drawer{position:fixed;right:0;top:0;bottom:0;width:min(430px,96vw);background:#fff;z-index:201;border-left:1px solid var(--border);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,0.08)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-header{padding:1.4rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cart-header h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--dark);display:flex;align-items:center;gap:.6rem}
+.close-btn{background:none;border:none;color:#bbb;font-size:1.3rem;cursor:pointer;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:#f5f1e8;color:var(--dark)}
+.cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem}
+.cart-empty{text-align:center;padding:4rem 1rem;color:#ccc}
+.cart-empty i{font-size:3.5rem;margin-bottom:1rem;display:block;color:#ddd}
+.cart-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 0;border-bottom:1px solid #f0ece4}
+.cart-item:last-child{border-bottom:none}
+.cart-item-img{width:64px;height:64px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+.cart-item-body{flex:1;min-width:0}
+.cart-item-name{font-weight:600;font-size:.9rem;color:var(--dark);line-height:1.3;margin-bottom:.2rem}
+.cart-item-unit{font-size:.78rem;color:#ccc;margin-bottom:.5rem}
+.cart-item-price{font-size:.92rem;color:var(--orange);font-weight:700}
+.qty-ctrl{display:flex;align-items:center;gap:.5rem;margin-top:.5rem}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:transparent;color:var(--dark);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.qty-btn:hover{border-color:var(--orange);color:var(--orange);background:#fff3ee}
+.qty-num{font-size:.9rem;font-weight:700;min-width:22px;text-align:center;color:var(--dark)}
+.remove-btn{background:none;border:none;color:#ddd;cursor:pointer;padding:.4rem;transition:color .2s;font-size:1rem;flex-shrink:0;margin-top:.2rem}
+.remove-btn:hover{color:var(--red)}
+.cart-footer{padding:1.4rem 1.5rem;border-top:1px solid var(--border);flex-shrink:0;background:#faf8f4}
+.delivery-label{font-size:.76rem;color:#aaa;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+.delivery-input{width:100%;padding:.72rem 1rem;background:#fff;border:1.5px solid var(--border);border-radius:10px;color:var(--dark);font-size:.88rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;resize:none;margin-bottom:1.1rem}
+.delivery-input:focus{border-color:var(--orange)}
+.delivery-input::placeholder{color:#ccc}
+.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;font-size:.85rem;color:#aaa}
+.cart-delivery-fee{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;font-size:.85rem;color:#aaa;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.cart-total-label{font-size:1rem;font-weight:600;color:var(--dark)}
+.cart-total-amount{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:900;color:var(--orange)}
+.btn-order{width:100%;padding:.92rem;background:var(--orange);color:#fff;border:none;border-radius:11px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;box-shadow:0 6px 20px rgba(232,85,10,0.25)}
+.btn-order:hover{background:var(--orange-light);transform:translateY(-1px)}
+
+/* SUCCESS */
+.order-success{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px)}
+.success-box{background:#fff;border-radius:22px;padding:3rem 2.5rem;text-align:center;max-width:400px;width:90%;animation:popIn .45s cubic-bezier(.34,1.56,.64,1);box-shadow:0 30px 80px rgba(0,0,0,0.15)}
+@keyframes popIn{from{transform:scale(.75);opacity:0}to{transform:scale(1);opacity:1}}
+.success-icon{font-size:4.5rem;color:var(--green);margin-bottom:1rem;display:block}
+.success-box h2{font-family:'Playfair Display',serif;font-size:2rem;color:var(--dark);margin-bottom:.6rem}
+.success-box p{color:#aaa;margin-bottom:.5rem;line-height:1.65;font-size:.93rem}
+.success-eta{display:inline-flex;align-items:center;gap:.5rem;background:#fff3ee;border:1px solid rgba(232,85,10,0.2);color:var(--orange);padding:.5rem 1.3rem;border-radius:50px;font-size:.88rem;font-weight:600;margin:1rem 0 1.6rem}
+.btn-continue{padding:.82rem 2.2rem;background:var(--orange);color:#fff;border:none;border-radius:10px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-continue:hover{background:var(--orange-light)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(120px);background:var(--orange);color:#fff;padding:.7rem 1.6rem;border-radius:50px;font-weight:700;font-size:.88rem;z-index:400;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;box-shadow:0 8px 24px rgba(232,85,10,0.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* FOOTER */
+footer{background:#fff;border-top:1px solid var(--border);padding:2.5rem 1.5rem;margin-top:2rem}
+.footer-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;align-items:start}
+@media(max-width:640px){.footer-inner{grid-template-columns:1fr}}
+.footer-brand{font-family:'Playfair Display',serif;color:var(--orange);font-size:1.3rem;font-weight:900;margin-bottom:.5rem}
+.footer-desc{color:#bbb;font-size:.85rem;line-height:1.6}
+.footer-title{color:#ccc;font-size:.74rem;text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-bottom:.9rem}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:.5rem}
+.footer-links a{color:#bbb;text-decoration:none;font-size:.85rem;transition:color .2s;cursor:pointer}
+.footer-links a:hover{color:var(--orange)}
+.footer-contact p{color:#bbb;font-size:.85rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem}
+.footer-bottom{max-width:1140px;margin:1.5rem auto 0;padding-top:1.2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:#ccc;flex-wrap:wrap;gap:.5rem}
+
+@media(max-width:480px){
+  .food-grid{grid-template-columns:1fr 1fr;gap:.8rem}
+  .food-img{height:130px}
+  .food-info{padding:.8rem}
+  .food-desc{display:none}
+  .hero{padding:4rem 1rem 3rem}
+}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-bg"></div>
+  <div class="auth-box">
+    <div class="auth-logo">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80" alt="Kigali Food">
+    </div>
+    <div class="auth-brand">Kigali Food</div>
+    <div class="auth-tagline">Authentic Flavors · Kigali, Rwanda</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="switchTab('signup')">Create Account</button>
+    </div>
+    <div id="login-form">
+      <div class="input-group"><label>Email Address</label><input type="email" id="login-email" placeholder="you@example.com"></div>
+      <div class="input-group"><label>Password</label><input type="password" id="login-pass" placeholder="Enter your password"></div>
+      <div class="auth-error" id="login-error">Please enter your email and password.</div>
+      <button class="btn-auth" onclick="doLogin()">Sign In →</button>
+    </div>
+    <div id="signup-form" style="display:none">
+      <div class="input-group"><label>Full Name</label><input type="text" id="signup-name" placeholder="Your full name"></div>
+      <div class="input-group"><label>Email Address</label><input type="email" id="signup-email" placeholder="you@example.com"></div>
+      <div class="input-group"><label>Phone Number</label><input type="tel" id="signup-phone" placeholder="+250 7XX XXX XXX"></div>
+      <div class="input-group"><label>Password</label><input type="password" id="signup-pass" placeholder="Create a password"></div>
+      <div class="auth-error" id="signup-error">Please fill in all fields.</div>
+      <button class="btn-auth" onclick="doSignup()">Create Account →</button>
+    </div>
+    <div class="auth-divider">or</div>
+    <button class="btn-guest" onclick="guestLogin()"><i class="ti ti-user"></i> Browse as Guest</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-img"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=120&q=80" alt="logo"></div>
+      <div>
+        <div class="nav-brand">Kigali Food</div>
+        <div class="nav-sub">Kigali, Rwanda</div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <span class="nav-username" id="nav-username"></span>
+      <button class="cart-btn" onclick="openCart()">
+        <i class="ti ti-shopping-cart"></i> Cart <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><i class="ti ti-map-pin"></i> Free delivery across Kigali</div>
+    <h1>Real Food.<br><span>Real Flavor.</span><br>Real Rwanda.</h1>
+    <p class="hero-desc">Fresh ingredients, bold spices, and fast delivery — from our kitchen to your door in under 40 minutes.</p>
+    <button class="hero-cta" onclick="document.querySelector('.main').scrollIntoView({behavior:'smooth'})">
+      <i class="ti ti-arrow-down"></i> Explore Menu
+    </button>
+    <div class="hero-stats">
+      <div><div class="hero-stat-num">5K+</div><div class="hero-stat-label">Orders</div></div>
+      <div><div class="hero-stat-num">4.8★</div><div class="hero-stat-label">Rating</div></div>
+      <div><div class="hero-stat-num">25min</div><div class="hero-stat-label">Avg Delivery</div></div>
+      <div><div class="hero-stat-num">Since '18</div><div class="hero-stat-label">Est. Year</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="sec-header">
+    <div class="sec-title">Our Menu</div>
+    <div class="sec-sub" id="item-count"></div>
+  </div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="filterCat('all',this)"><i class="ti ti-layout-grid"></i> All Items</button>
+    <button class="cat-btn" onclick="filterCat('burgers',this)"><i class="ti ti-burger"></i> Burgers</button>
+    <button class="cat-btn" onclick="filterCat('sides',this)"><i class="ti ti-bowl"></i> Sides</button>
+    <button class="cat-btn" onclick="filterCat('drinks',this)"><i class="ti ti-glass"></i> Drinks</button>
+    <button class="cat-btn" onclick="filterCat('desserts',this)"><i class="ti ti-ice-cream"></i> Desserts</button>
+  </div>
+  <div class="food-grid" id="food-grid"></div>
+
+  <div class="sec-header"><div class="sec-title">About Us</div></div>
+  <div class="about-section">
+    <div class="about-img-wrap">
+      <img class="about-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt="Kigali Food restaurant">
+      <div class="about-img-label"><i class="ti ti-map-pin"></i> KG 9 Ave, Kigali</div>
+    </div>
+    <div class="about-text">
+      <h2>Born in Kigali,<br><span>Made with Love.</span></h2>
+      <p>Founded in 2018 in the heart of Kigali, Rwanda, Kigali Food was born from a passion for bold flavors and warm Rwandan hospitality. We blend international culinary techniques with locally-sourced ingredients from Rwandan farmers.</p>
+      <p>Every burger is grilled fresh to order, every side is prepared daily, and every delivery is packed with care. We believe exceptional food should be accessible to everyone in our beautiful city.</p>
+      <div class="about-highlights">
+        <div class="highlight-chip"><i class="ti ti-leaf" style="font-size:13px;color:var(--green)"></i> Locally sourced</div>
+        <div class="highlight-chip"><i class="ti ti-flame" style="font-size:13px;color:var(--red)"></i> Grilled fresh</div>
+        <div class="highlight-chip"><i class="ti ti-truck" style="font-size:13px;color:var(--orange)"></i> Fast delivery</div>
+        <div class="highlight-chip"><i class="ti ti-star" style="font-size:13px;color:var(--yellow)"></i> Premium quality</div>
+      </div>
+      <div class="about-stats">
+        <div class="a-stat"><div class="a-stat-num">5K+</div><div class="a-stat-label">Orders Served</div></div>
+        <div class="a-stat"><div class="a-stat-num">4.8★</div><div class="a-stat-label">Avg Rating</div></div>
+        <div class="a-stat"><div class="a-stat-num">25min</div><div class="a-stat-label">Avg Delivery</div></div>
+        <div class="a-stat"><div class="a-stat-num">7 yrs</div><div class="a-stat-label">In Business</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Kigali Food</div>
+      <div class="footer-desc">Authentic flavors, fresh ingredients, fast delivery — right to your door anywhere in Kigali, Rwanda.</div>
+    </div>
+    <div>
+      <div class="footer-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a onclick="filterCat('all',document.querySelector('.cat-btn'))">Full Menu</a></li>
+        <li><a onclick="filterCat('burgers',document.querySelectorAll('.cat-btn')[1])">Burgers</a></li>
+        <li><a onclick="filterCat('drinks',document.querySelectorAll('.cat-btn')[3])">Drinks</a></li>
+        <li><a onclick="filterCat('desserts',document.querySelectorAll('.cat-btn')[4])">Desserts</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">Contact Us</div>
+      <p><i class="ti ti-map-pin" style="font-size:15px;color:var(--orange)"></i> KG 9 Ave, Kigali, Rwanda</p>
+      <p><i class="ti ti-phone" style="font-size:15px;color:var(--orange)"></i> +250 788 000 111</p>
+      <p><i class="ti ti-mail" style="font-size:15px;color:var(--orange)"></i> hello@kigalifood.rw</p>
+      <p><i class="ti ti-clock" style="font-size:15px;color:var(--orange)"></i> Daily: 10:00 AM – 11:00 PM</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Kigali Food. All rights reserved.</span>
+    <span>Made with ❤️ in Kigali, Rwanda</span>
+  </div>
+</footer>
+</div>
+
+<!-- CART -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <h3><i class="ti ti-shopping-cart" style="color:var(--orange)"></i> Your Order</h3>
+    <button class="close-btn" onclick="closeCart()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-footer">
+    <div class="delivery-label"><i class="ti ti-map-pin" style="font-size:14px;color:var(--orange)"></i> Delivery Address</div>
+    <textarea class="delivery-input" id="delivery-address" rows="2" placeholder="e.g. KG 9 Ave, near Kimironko Market, Kigali..."></textarea>
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal-val">RWF 0</span></div>
+    <div class="cart-delivery-fee"><span>Delivery fee</span><span style="color:var(--green);font-weight:700">FREE</span></div>
+    <div class="cart-total"><span class="cart-total-label">Total</span><span class="cart-total-amount" id="cart-total">RWF 0</span></div>
+    <button class="btn-order" onclick="placeOrder()"><i class="ti ti-check"></i> Place Order</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="order-success" id="order-success">
+  <div class="success-box">
+    <i class="ti ti-circle-check success-icon"></i>
+    <h2>Order Placed!</h2>
+    <p>Your food is being prepared with love right now. Hang tight!</p>
+    <div class="success-eta"><i class="ti ti-clock"></i> Estimated delivery: 25–40 minutes</div>
+    <p id="success-address" style="font-size:.82rem;color:#bbb;margin-bottom:1.4rem"></p>
+    <div style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn-continue" onclick="closeSuccess()">Continue Browsing</button>
+      <button class="btn-continue" onclick="printOrder()" style="background:#fff;color:var(--orange);border:2px solid var(--orange)"><i class="ti ti-printer"></i> Print Receipt</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MENU=[
+  {id:1,cat:'burgers',name:'Classic Kigali Burger',desc:'Juicy beef patty, fresh tomatoes, crisp lettuce, pickles & our special sauce',price:4500,img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80',badge:'popular'},
+  {id:2,cat:'burgers',name:'Double Smash Burger',desc:'Two smashed beef patties, double American cheese, caramelized onions, mustard',price:6500,img:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=500&q=80',badge:'popular'},
+  {id:3,cat:'burgers',name:'Spicy Peri-Peri Chicken',desc:'Crispy fried chicken, fiery peri-peri sauce, coleslaw, pickled jalapeños',price:5500,img:'https://images.unsplash.com/photo-1596956470007-2bf6095e7e16?w=500&q=80',badge:'spicy'},
+  {id:4,cat:'burgers',name:'Veggie Supreme',desc:'Homemade black bean patty, avocado, roasted peppers, tahini drizzle',price:4000,img:'https://images.unsplash.com/photo-1550547660-d9450f859349?w=500&q=80',badge:'veg'},
+  {id:5,cat:'burgers',name:'BBQ Bacon Burger',desc:'Beef patty, crispy streaky bacon, smoky BBQ sauce, aged cheddar, jalapeños',price:7000,img:'https://images.unsplash.com/photo-1582196016295-f8c8bd4b3a99?w=500&q=80',badge:''},
+  {id:6,cat:'burgers',name:'Mushroom Swiss Burger',desc:'Grilled portobello, Swiss cheese, garlic aioli, caramelized onion brioche',price:5000,img:'https://images.unsplash.com/photo-1551782450-17144efb9c50?w=500&q=80',badge:'veg'},
+  {id:7,cat:'sides',name:'Crispy French Fries',desc:'Golden, sea-salted, freshly fried — perfectly crispy every time',price:1800,img:'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=500&q=80',badge:'popular'},
+  {id:8,cat:'sides',name:'Onion Rings',desc:'Beer-battered golden onion rings served with smoky chipotle dipping sauce',price:2200,img:'https://images.unsplash.com/photo-1639024471283-03518883512d?w=500&q=80',badge:''},
+  {id:9,cat:'sides',name:'Creamy Coleslaw',desc:'Homemade coleslaw with fresh herbs, apple cider vinegar dressing',price:1500,img:'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=500&q=80',badge:'veg'},
+  {id:10,cat:'sides',name:'Plantain Chips',desc:'Lightly salted crispy sweet plantain chips — a Rwandan classic',price:1600,img:'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&q=80',badge:'popular'},
+  {id:11,cat:'sides',name:'Spicy Chicken Wings',desc:'6 crispy wings tossed in house hot sauce, served with ranch dip',price:3500,img:'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=500&q=80',badge:'spicy'},
+  {id:12,cat:'drinks',name:'Fresh Mango Juice',desc:'100% Rwandan mangoes, pressed fresh — no sugar added',price:1800,img:'https://images.unsplash.com/photo-1546173159-315724a31696?w=500&q=80',badge:'popular'},
+  {id:13,cat:'drinks',name:'Passion Fruit Iced Tea',desc:'Tropical passion fruit, black tea, lime juice, fresh mint, ice',price:2000,img:'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&q=80',badge:''},
+  {id:14,cat:'drinks',name:'Kigali Ginger Lemonade',desc:'Fresh lemon, Rwandan ginger, raw honey, sparkling mineral water',price:1700,img:'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=500&q=80',badge:''},
+  {id:15,cat:'drinks',name:'Cold Brew Coffee',desc:'12-hour cold brew, oat milk, light caramel — smooth & bold',price:2500,img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&q=80',badge:''},
+  {id:16,cat:'drinks',name:'Strawberry Banana Smoothie',desc:'Fresh strawberries, banana, full-fat yogurt, honey drizzle',price:2200,img:'https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=500&q=80',badge:'popular'},
+  {id:17,cat:'drinks',name:'Avocado Shake',desc:'Creamy Rwandan avocado, condensed milk, hint of vanilla',price:2400,img:'https://images.unsplash.com/photo-1556881286-fc6915169721?w=500&q=80',badge:''},
+  {id:18,cat:'desserts',name:'Chocolate Lava Cake',desc:'Warm chocolate sponge with a molten fudge center, vanilla ice cream',price:3500,img:'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500&q=80',badge:'popular'},
+  {id:19,cat:'desserts',name:'Mango Panna Cotta',desc:'Silky Italian cream with fresh Rwandan mango coulis and mint',price:3000,img:'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=500&q=80',badge:''},
+  {id:20,cat:'desserts',name:'Caramelized Banana Fritters',desc:'Fried bananas, cinnamon-brown sugar crust, warm caramel dipping sauce',price:2500,img:'https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=500&q=80',badge:''},
+  {id:21,cat:'desserts',name:'New York Cheesecake',desc:'Classic baked cheesecake on graham crust, fresh berry compote',price:3200,img:'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=500&q=80',badge:'popular'},
+  {id:22,cat:'desserts',name:'Vanilla Ice Cream',desc:'3 scoops of creamy vanilla, chocolate sauce, crushed wafers',price:1800,img:'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&q=80',badge:''},
+];
+
+let cart=[],currentUser=null;
+
+function switchTab(t){
+  document.getElementById('login-form').style.display=t==='login'?'block':'none';
+  document.getElementById('signup-form').style.display=t==='signup'?'block':'none';
+  document.querySelectorAll('.auth-tab').forEach((b,i)=>b.classList.toggle('active',(t==='login'&&i===0)||(t==='signup'&&i===1)));
+  // Reset login error styling when manually switching tabs
+  if(t==='signup'){const e=document.getElementById('login-error');e.style.display='none';e.style.color='var(--red)';}
+}
+function doLogin(){
+  const e=document.getElementById('login-email').value.trim();
+  const p=document.getElementById('login-pass').value;
+  const err=document.getElementById('login-error');
+  if(!e||!p){err.style.display='block';return;}
+  err.style.display='none';
+  const name=e.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  enterApp(name);
+}
+function doSignup(){
+  const n=document.getElementById('signup-name').value.trim();
+  const e=document.getElementById('signup-email').value.trim();
+  const p=document.getElementById('signup-pass').value;
+  const err=document.getElementById('signup-error');
+  if(!n||!e||!p){err.style.display='block';return;}
+  err.style.display='none';
+  // Pre-fill login email and switch to login tab
+  document.getElementById('login-email').value=e;
+  document.getElementById('login-pass').value='';
+  switchTab('login');
+  // Show a success message on the login form
+  const loginErr=document.getElementById('login-error');
+  loginErr.style.display='block';
+  loginErr.style.color='var(--green)';
+  loginErr.textContent='✅ Account created! Please log in to continue.';
+}
+function guestLogin(){enterApp('Guest');}
+function enterApp(name){
+  currentUser=name;
+  document.getElementById('nav-username').textContent='Hi, '+name+' 👋';
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  renderMenu('all');
+  document.getElementById('item-count').textContent=MENU.length+' items available';
+}
+function logout(){
+  document.getElementById('auth-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  cart=[];updateCartUI();
+}
+function filterCat(cat,btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  renderMenu(cat);
+  const items=cat==='all'?MENU:MENU.filter(i=>i.cat===cat);
+  document.getElementById('item-count').textContent=items.length+' items';
+}
+function renderMenu(cat){
+  const grid=document.getElementById('food-grid');
+  const items=cat==='all'?MENU:MENU.filter(i=>i.cat===cat);
+  grid.innerHTML=items.map(item=>{
+    let b='';
+    if(item.badge==='popular')b='<div class="food-badge badge-popular">⭐ Popular</div>';
+    else if(item.badge==='spicy')b='<div class="food-badge badge-spicy">🌶 Spicy</div>';
+    else if(item.badge==='veg')b='<div class="food-badge badge-veg">🌿 Veg</div>';
+    return`<div class="food-card"><div class="food-img-wrap"><img class="food-img" src="${item.img}" alt="${item.name}" loading="lazy">${b}</div><div class="food-info"><div class="food-name">${item.name}</div><div class="food-desc">${item.desc}</div><div class="food-footer"><div class="food-price">RWF ${item.price.toLocaleString()} <small>/ item</small></div><button class="add-btn" onclick="addToCart(${item.id})">+</button></div></div></div>`;
+  }).join('');
+}
+function addToCart(id){
+  const item=MENU.find(i=>i.id===id);
+  const ex=cart.find(i=>i.id===id);
+  if(ex)ex.qty++;else cart.push({...item,qty:1});
+  updateCartUI();showToast(item.name+' added!');
+}
+function removeFromCart(id){cart=cart.filter(i=>i.id!==id);updateCartUI();renderCartItems();}
+function changeQty(id,d){
+  const item=cart.find(i=>i.id===id);
+  if(!item)return;
+  item.qty+=d;
+  if(item.qty<=0){removeFromCart(id);return;}
+  updateCartUI();renderCartItems();
+}
+function updateCartUI(){
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cart-count').textContent=count;
+  const fmt='RWF '+total.toLocaleString();
+  document.getElementById('cart-total').textContent=fmt;
+  const sv=document.getElementById('cart-subtotal-val');
+  if(sv)sv.textContent=fmt;
+}
+function renderCartItems(){
+  const list=document.getElementById('cart-items-list');
+  if(cart.length===0){list.innerHTML='<div class="cart-empty"><i class="ti ti-basket-off"></i><p style="font-size:1rem;font-weight:600;color:#aaa;margin-bottom:.3rem">Your cart is empty</p><p>Add items from the menu</p></div>';return;}
+  list.innerHTML=cart.map(item=>`<div class="cart-item"><img class="cart-item-img" src="${item.img}" alt="${item.name}"><div class="cart-item-body"><div class="cart-item-name">${item.name}</div><div class="cart-item-unit">RWF ${item.price.toLocaleString()} each</div><div class="cart-item-price">RWF ${(item.price*item.qty).toLocaleString()}</div><div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(${item.id},-1)"><i class="ti ti-minus" style="font-size:11px"></i></button><span class="qty-num">${item.qty}</span><button class="qty-btn" onclick="changeQty(${item.id},1)"><i class="ti ti-plus" style="font-size:11px"></i></button></div></div><button class="remove-btn" onclick="removeFromCart(${item.id})"><i class="ti ti-trash"></i></button></div>`).join('');
+}
+function openCart(){renderCartItems();document.getElementById('cart-overlay').style.display='block';document.getElementById('cart-drawer').classList.add('open');}
+function closeCart(){document.getElementById('cart-overlay').style.display='none';document.getElementById('cart-drawer').classList.remove('open');}
+let lastOrder=[];
+let lastOrderAddr='';
+function placeOrder(){
+  const addr=document.getElementById('delivery-address').value.trim();
+  if(cart.length===0){showToast('Add items to your cart first!');return;}
+  if(!addr){showToast('Please enter your delivery address');document.getElementById('delivery-address').focus();return;}
+  // Deep-copy every cart item BEFORE clearing cart
+  lastOrder=cart.map(i=>({id:i.id,name:i.name,price:i.price,qty:i.qty,cat:i.cat}));
+  lastOrderAddr=addr;
+  closeCart();
+  document.getElementById('success-address').textContent='📍 Delivering to: '+addr;
+  document.getElementById('order-success').style.display='flex';
+  cart=[];updateCartUI();
+  document.getElementById('delivery-address').value='';
+}
+function printOrder(){
+  if(!lastOrder.length){showToast('No order to print!');return;}
+  const subtotal=lastOrder.reduce((s,i)=>s+i.price*i.qty,0);
+  const now=new Date().toLocaleString('en-RW',{dateStyle:'long',timeStyle:'short'});
+  const orderNum='KF-'+Date.now().toString().slice(-6);
+  const rows=lastOrder.map((i,idx)=>
+    '<tr>'+
+    '<td style="color:#ccc;font-size:.78rem;width:22px;padding:.55rem .4rem;border-bottom:1px solid #f0ece4">'+(idx+1)+'</td>'+
+    '<td style="font-weight:600;padding:.55rem .4rem;border-bottom:1px solid #f0ece4">'+i.name+'</td>'+
+    '<td style="text-align:center;color:#666;padding:.55rem .4rem;border-bottom:1px solid #f0ece4">RWF '+i.price.toLocaleString()+'</td>'+
+    '<td style="text-align:center;font-weight:700;padding:.55rem .4rem;border-bottom:1px solid #f0ece4">'+i.qty+'</td>'+
+    '<td style="text-align:right;font-weight:700;padding:.55rem .4rem;border-bottom:1px solid #f0ece4">RWF '+(i.price*i.qty).toLocaleString()+'</td>'+
+    '</tr>'
+  ).join('');
+
+  const html=
+    '<!DOCTYPE html><html><head><meta charset="UTF-8">'+
+    '<style>'+
+    '*{margin:0;padding:0;box-sizing:border-box}'+
+    'body{font-family:Arial,sans-serif;background:#fff;color:#1a1a14;font-size:13px;padding:24px}'+
+    '.wrap{max-width:540px;margin:0 auto}'+
+    '.top{text-align:center;border-bottom:3px solid #e8550a;padding-bottom:14px;margin-bottom:14px}'+
+    '.brand{font-size:26px;font-weight:900;color:#e8550a}'+
+    '.brand-sub{font-size:10px;color:#aaa;letter-spacing:2px;text-transform:uppercase;margin-top:2px}'+
+    '.badge{margin-top:8px;display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#888;background:#f5f1e8;padding:4px 14px;border-radius:30px;border:1px solid #e8e4da}'+
+    '.meta{display:flex;flex-wrap:wrap;gap:6px;justify-content:space-between;margin-bottom:14px;font-size:11px;color:#888}'+
+    '.meta span strong{color:#1a1a14}'+
+    'table{width:100%;border-collapse:collapse;margin-bottom:14px}'+
+    'thead tr{background:#e8550a}'+
+    'thead th{color:#fff;padding:7px 6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;text-align:left}'+
+    'thead th.c{text-align:center}thead th.r{text-align:right}'+
+    'tbody tr:nth-child(even){background:#faf8f4}'+
+    '.totals{margin-left:auto;width:220px;margin-bottom:14px;font-size:12px}'+
+    '.tr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f0ece4;color:#888}'+
+    '.tr.gr{border-top:2px solid #e8550a;border-bottom:none;font-size:14px;font-weight:700;color:#e8550a;padding-top:8px}'+
+    '.tr.dv{color:#1a9e4a;font-weight:600}'+
+    '.box{background:#f5f1e8;border:1px solid #e8e4da;border-radius:6px;padding:9px 12px;margin-bottom:8px;font-size:12px;color:#555;line-height:1.6}'+
+    '.box b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#aaa;margin-bottom:3px}'+
+    '.eta{background:#eefff4;border:1px solid #b2f0c8;border-radius:6px;padding:8px 12px;margin-bottom:14px;font-size:12px;color:#1a9e4a;font-weight:600}'+
+    '.foot{text-align:center;font-size:11px;color:#bbb;border-top:1px dashed #e8e4da;padding-top:12px;line-height:1.9}'+
+    '.foot strong{color:#e8550a}'+
+    '@media print{body{padding:4px}.wrap{max-width:100%}button{display:none!important}}'+
+    '</style></head><body>'+
+    '<div class="wrap">'+
+    '<div class="top">'+
+    '<div class="brand">Kigali Food</div>'+
+    '<div class="brand-sub">Authentic Flavors &middot; Kigali, Rwanda</div>'+
+    '<div class="badge">Order Receipt</div>'+
+    '</div>'+
+    '<div class="meta">'+
+    '<span><strong>Order #:</strong> '+orderNum+'</span>'+
+    '<span><strong>Date:</strong> '+now+'</span>'+
+    '<span><strong>Customer:</strong> '+currentUser+'</span>'+
+    '<span><strong>Total items:</strong> '+lastOrder.reduce((s,i)=>s+i.qty,0)+'</span>'+
+    '</div>'+
+    '<table>'+
+    '<thead><tr><th>#</th><th>Item</th><th class="c">Unit Price</th><th class="c">Qty</th><th class="r">Subtotal</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody>'+
+    '</table>'+
+    '<div class="totals">'+
+    '<div class="tr"><span>Subtotal</span><span>RWF '+subtotal.toLocaleString()+'</span></div>'+
+    '<div class="tr dv"><span>Delivery</span><span>FREE</span></div>'+
+    '<div class="tr gr"><span>TOTAL</span><span>RWF '+subtotal.toLocaleString()+'</span></div>'+
+    '</div>'+
+    '<div class="box"><b>Delivery Address</b>'+lastOrderAddr+'</div>'+
+    '<div class="eta">Estimated delivery: 25 – 40 minutes</div>'+
+    '<div class="foot">Thank you for ordering with <strong>Kigali Food</strong>!<br>'+
+    'KG 9 Ave, Kigali, Rwanda &nbsp;&middot;&nbsp; +250 788 000 111 &nbsp;&middot;&nbsp; hello@kigalifood.rw<br>'+
+    'Daily: 10:00 AM – 11:00 PM</div>'+
+    '</div></body></html>';
+
+  // Use a hidden iframe — works even when popups are blocked
+  let fr=document.getElementById('print-frame');
+  if(!fr){fr=document.createElement('iframe');fr.id='print-frame';fr.style.cssText='position:fixed;right:-9999px;bottom:-9999px;width:1px;height:1px;border:none';document.body.appendChild(fr);}
+  fr.onload=function(){
+    try{fr.contentWindow.focus();fr.contentWindow.print();}
+    catch(e){showToast('Could not open print dialog');}
+  };
+  fr.srcdoc=html;
+}
+function closeSuccess(){document.getElementById('order-success').style.display='none';}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeSuccess();}});
+</script>
+</body>
+</html>
